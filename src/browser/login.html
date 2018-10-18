@@ -42,7 +42,7 @@
             color: #d5d5d5;
         }
 
-        .form .login_btn{
+        .form #loginbtn{
             box-sizing: border-box;
             width: 100%;
             display:inline-block;
@@ -60,7 +60,7 @@
             font-size:14px;
             border-radius:4px
         }
-        .form .login_btn:focus,.form .login_btn:hover{
+        .form #loginbtn:focus,.form .login_btn:hover{
             color:#409EFF;
             border-color:#c6e2ff;
             background-color:#ecf5ff
@@ -87,20 +87,43 @@
             font-size:14px;
             border-radius:4px
         }
+        .c2{
+            display: none;
+            justify-content: center;
+            align-items: center;
+            width:400px;
+            height:200px;
+            text-align:center;
+            background-color:white;
+            border:2px solid #dcdfe6;
+            border-radius:4px;
+            padding:4px 4px;
+            position:fixed;
+            left:50%;
+            top:0;
+            margin-left:-200px;
+            z-index:10;
+        }
     </style>
 </head>
 
 <body>
+    <div id="dialog" class="c2 hide">
+    </div>
     <div class="content">
-        <form action="./home.html" class="form">
-            <div class="row_center form-header"><h1>欢迎来到麦壳电影</h1></div>
-            <div class="row_center"><input type="text" placeholder="用户名" name="" id="name"></div>
-            <div class="row_center"><input type="password" placeholder="密码" name="" id="password"></div>
+        <form action="" class="form">
+            <div class="row_center form-header">
+                <h1>欢迎来到麦壳电影</h1>
+            </div>
+            <div class="row_center"><input type="text" placeholder="用户名" name="" id="nameInput"></div>
+            <div class="row_center"><input type="password" placeholder="密码" name="" id="pwdInput"></div>
             <div class="row_end"><label for="rememberPwd"><input type="checkbox" name="" id="rememberPwd">记住密码</label></div>
-            <div class="row_center"><button type="submit" class="login_btn">登录</button></div>
-            <div class="row_end"><a href="">忘记密码 </a><a href=""> 注册</a></div>
+            <div class="row_center"><button type="button" id="loginbtn">登录</button></div>
+            <div class="row_end"><a href="">忘记密码 </a><a href="./register.html"> 注册</a></div>
         </form>
     </div>
+    <script src="./login.js">
+    </script>
 </body>
 
 </html>

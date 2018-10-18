@@ -84,7 +84,7 @@ async function main() {
         outerDiv.style.top=innerDiv.style.top=0;
         outerDiv.style.backgroundColor="rgba(0,0,0,0)"
         innerDiv.style.backgroundColor="rgba(90,90,90,0.5)"
-        dc.dragable(outerDiv,innerDiv)
+        innerDiv=dc.dragable(outerDiv,innerDiv)
         divBox.appendChild(outerDiv)
     })
     // 旋转和镜像
@@ -136,6 +136,8 @@ async function main() {
         let y=parseInt(innerDiv.style.top)
         let w=parseInt(innerDiv.style.width)
         let h=parseInt(innerDiv.style.height)
+        console.log(innerDiv.style.left,innerDiv.style.top)
+        console.log(x,y,w,h)
         currentJmage.crop(x,y,w,h)
         divBox.removeChild(outerDiv)
         let src = await currentJmage.getBase64Async(Jimp.MIME_JPEG)
