@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://necolas.github.io/normalize.css/8.0.0/normalize.css" />
+    <style>
+        .page{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+        .header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 40px;
+            padding: 0 20px;
+            background-color: #545652;
+        }
+        .header span{
+            color: #d5d5d5;
+            font-size: 20px;
+        }
+        .header a{
+            margin: 0 5px;
+            color: #d5d5d5;
+        }
+        .content{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+
+        }
+        .footer{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80px;
+            background-color: #F6F6F6;
+        }
+        .list{
+            display: flex;
+            flex-wrap: wrap;
+            padding:0;
+            max-width: 1000px;
+            margin-top: 40px;
+        }
+
+
+
+        .card{
+            display: flex;
+            flex-direction: column;
+            margin: 5px;
+        }
+        .card-footer{
+            display: flex;
+            justify-content: space-between;
+        }
+        .img{
+            height: 160px;
+            width: 115px;
+        }
+        @media screen and (max-width:999px){
+            .list{max-width: 750px}
+        }
+        @media screen and (max-width:749px){
+            .list{max-width: 500px}
+        }
+        @media screen and (max-width:499px){
+            .list{max-width: 375px}
+        }
+        @media screen and (max-width:374px){
+            .img{
+                height: 140px;
+                width: 90px;
+            }
+            .list{max-width: 300px}
+
+        }
+        @media screen and (max-width:249px){
+            .list{max-width: 125px}
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div>
+            <div class="header"><span>麦壳电影</span><div><a href="./makePoster.html">制作海报</a><a href="./login.html">登录</a></div></div>
+            <div class="content">
+                <ul class="list">
+                    <li class="card">
+                        <img  class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2525528688.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2529206747.webp" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2508259902.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2526405034.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2520331478.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2523592367.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2522069454.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2528740370.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2530863118.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2507709428.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2516914607.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2272563445.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2522069454.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2527072332.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2531984454.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                    <li class="card">
+                        <img  class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2530572643.jpg" alt="">
+                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">Copyleft © 2018 NJU邵靖</div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "web's training project",
+  "main": "src/index.js",
+  "author": "shawjing",
+  "license": "MIT",
+  "scripts": {
+    "serve": "parcel src/home.html",
+    "build": "parcel build src/login.html"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "jimp": "^0.5.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "parcel-plugin-asset-copier": "^1.0.0"
+  },
+  "assetsPath": "res"
+}

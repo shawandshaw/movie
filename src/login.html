@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://necolas.github.io/normalize.css/8.0.0/normalize.css" />
+    <style>
+        /*页面布局及样式*/
+        .content{
+            position: relative;
+            top:30vh;
+            display: flex;
+            justify-content: center;
+        }
+        body{
+            background-color:#545652;
+        }
+
+        /*表格布局及样式*/
+        .form{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+            width: 300px;
+            height: 250px;
+            /*background-color:yellow;*/
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .row_end{
+            display: flex;
+            justify-content: flex-end;
+        }
+        .row_center{
+            display: flex;
+            justify-content: center;
+        }
+        .form-header h1{
+            color: #d5d5d5;
+        }
+
+        .form .login_btn{
+            box-sizing: border-box;
+            width: 100%;
+            display:inline-block;
+            line-height:1;
+            white-space:nowrap;
+            background:#fff;
+            border:1px solid #dcdfe6;
+            color:#606266;
+            text-align:center;
+            outline:0;
+            margin:0;
+            transition:.1s;
+            font-weight:500;
+            padding:8px 20px;
+            font-size:14px;
+            border-radius:4px
+        }
+        .form .login_btn:focus,.form .login_btn:hover{
+            color:#409EFF;
+            border-color:#c6e2ff;
+            background-color:#ecf5ff
+        }
+        .form a,.form label{
+            margin: 0 0 0 4px;
+            font-size: 14px;
+            color:#d5d5d5;
+        }
+        .form a:hover,.form label:hover{
+            color:#fff;
+        }
+        .form input[type=text],.form input[type=password]{
+            box-sizing: border-box;
+            width: 100%;
+            line-height:1;
+            white-space:nowrap;
+            background:#fff;
+            border:1px solid #dcdfe6;
+            padding:4px 4px;
+            outline:0;
+            margin:0;
+            font-weight:500;
+            font-size:14px;
+            border-radius:4px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <form action="./home.html" class="form">
+            <div class="row_center form-header"><h1>欢迎来到麦壳电影</h1></div>
+            <div class="row_center"><input type="text" placeholder="用户名" name="" id="name"></div>
+            <div class="row_center"><input type="password" placeholder="密码" name="" id="password"></div>
+            <div class="row_end"><label for="rememberPwd"><input type="checkbox" name="" id="rememberPwd">记住密码</label></div>
+            <div class="row_center"><button type="submit" class="login_btn">登录</button></div>
+            <div class="row_end"><a href="">忘记密码 </a><a href=""> 注册</a></div>
+        </form>
+    </div>
+</body>
+
+</html>
