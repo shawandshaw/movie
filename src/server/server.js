@@ -1,8 +1,8 @@
 const Koa = require('koa');
 const serve = require('koa-static');
-const path =require('path')
-const bodyparser=require('koa-bodyparser')
-const router =require('./router')
+const path = require('path')
+const bodyparser = require('koa-bodyparser')
+const router = require('./router')
 require('./database')
 const app = new Koa();
 
@@ -31,7 +31,7 @@ app.use(async (ctx, next) => {
 
 
 // response
-console.log(path.join(__dirname,'../../dist'))
+console.log(path.join(__dirname, '../../dist'))
 const static = serve(path.join('./dist'));
 app.use(static);
 

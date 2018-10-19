@@ -35,6 +35,7 @@ async function redo(func) {
     }
     console.log('redo', operatingHistory.version, operatingHistory.lastVersion)
 }
+
 function restartVCS() {
     operatingHistory.history.splice(
         0,
@@ -42,4 +43,9 @@ function restartVCS() {
     );
     operatingHistory.version = -1;
 }
-export {addVersion,redo,undo,restartVCS}
+export {
+    addVersion,
+    redo,
+    undo,
+    restartVCS
+}

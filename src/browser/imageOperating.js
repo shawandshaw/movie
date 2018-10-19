@@ -1,7 +1,15 @@
 import 'babel-polyfill'
 import Jimp from 'jimp'
-import { dragClass, dragDone } from './dragDom'
-import { addVersion, redo, undo, restartVCS } from './versionControl'
+import {
+    dragClass,
+    dragDone
+} from './dragDom'
+import {
+    addVersion,
+    redo,
+    undo,
+    restartVCS
+} from './versionControl'
 
 async function main() {
     // 全局变量    
@@ -15,16 +23,20 @@ async function main() {
     const redobtn = document.getElementById("redobtn")
     const restartbtn = document.getElementById("restartbtn")
     const finishbtn = document.getElementById("finishbtn")
-    redobtn.onclick = function () { redo(fill) }
-    undobtn.onclick = function () { undo(fill) }
+    redobtn.onclick = function () {
+        redo(fill)
+    }
+    undobtn.onclick = function () {
+        undo(fill)
+    }
     restartbtn.onclick = startOver
     finishbtn.onclick = finishStep
 
     // 导入导出
-    const readbtn=document.getElementById("readbtn")
-    const savebtn=document.getElementById("savebtn")
-    readbtn.onchange=readPic
-    savebtn.onclick=savePic
+    const readbtn = document.getElementById("readbtn")
+    const savebtn = document.getElementById("savebtn")
+    readbtn.onchange = readPic
+    savebtn.onclick = savePic
 
 
     //tabBar 
@@ -40,26 +52,33 @@ async function main() {
     const rotateUnit = document.getElementById("rotateUnit")
     const scaleUnit = document.getElementById("scaleUnit")
     const textUnit = document.getElementById("textUnit")
-    let tab = [[tabCrop,cropUnit],[textbtn, textUnit],[tabPaste, pasteUnit],[tabColor, colorUnit],  [tabRotate, rotateUnit], [tabScale, scaleUnit]]
+    let tab = [
+        [tabCrop, cropUnit],
+        [textbtn, textUnit],
+        [tabPaste, pasteUnit],
+        [tabColor, colorUnit],
+        [tabRotate, rotateUnit],
+        [tabScale, scaleUnit]
+    ]
     for (let i = 0; i < tab.length; i++) {
         let tabHead = tab[i][0]
         tabHead.onclick = async function () {
             finishbtn.style.display = "flex"
-            currentJmage=jimpStepBegin.clone()
-            let src= await currentJmage.getBase64Async(Jimp.MIME_JPEG)
-            putOnDom(src,imgDom)
+            currentJmage = jimpStepBegin.clone()
+            let src = await currentJmage.getBase64Async(Jimp.MIME_JPEG)
+            putOnDom(src, imgDom)
             for (let j = 0; j < tab.length; j++) {
                 if (j == i) tab[j][1].style.display = "flex"
                 else tab[j][1].style.display = "none"
             }
-            let list=divBox.childNodes
+            let list = divBox.childNodes
             for (let i = 0; i < list.length;) {
-                let node =list[i]
+                let node = list[i]
                 if (node.id == 'shawText' || node.id == 'shawImg')
                     divBox.removeChild(node)
                 else i++
             }
-            if(outerDiv.parentElement==divBox){
+            if (outerDiv.parentElement == divBox) {
                 divBox.removeChild(outerDiv)
             }
 
@@ -68,23 +87,23 @@ async function main() {
 
 
     // 裁剪
-    let outerDiv=document.createElement('div')
-    let innerDiv=document.createElement('div')
-    const cutbtn=document.getElementById('cut')
-    cutbtn.onclick=crop
-    tabCrop.addEventListener('click',function(){
+    let outerDiv = document.createElement('div')
+    let innerDiv = document.createElement('div')
+    const cutbtn = document.getElementById('cut')
+    cutbtn.onclick = crop
+    tabCrop.addEventListener('click', function () {
         let dc = new dragClass()
-        outerDiv.style.position='absolute'
-        innerDiv.style.position='absolute'
-        outerDiv.style.width=divBox.clientWidth+'px'
-        innerDiv.style.width=divBox.clientWidth/2+'px'
-        outerDiv.style.height=divBox.clientHeight+'px'
-        innerDiv.style.height=divBox.clientHeight/2+'px'
-        outerDiv.style.left=innerDiv.style.left=0;
-        outerDiv.style.top=innerDiv.style.top=0;
-        outerDiv.style.backgroundColor="rgba(0,0,0,0)"
-        innerDiv.style.backgroundColor="rgba(90,90,90,0.5)"
-        innerDiv=dc.dragable(outerDiv,innerDiv)
+        outerDiv.style.position = 'absolute'
+        innerDiv.style.position = 'absolute'
+        outerDiv.style.width = divBox.clientWidth + 'px'
+        innerDiv.style.width = divBox.clientWidth / 2 + 'px'
+        outerDiv.style.height = divBox.clientHeight + 'px'
+        innerDiv.style.height = divBox.clientHeight / 2 + 'px'
+        outerDiv.style.left = innerDiv.style.left = 0;
+        outerDiv.style.top = innerDiv.style.top = 0;
+        outerDiv.style.backgroundColor = "rgba(0,0,0,0)"
+        innerDiv.style.backgroundColor = "rgba(90,90,90,0.5)"
+        innerDiv = dc.dragable(outerDiv, innerDiv)
         divBox.appendChild(outerDiv)
     })
     // 旋转和镜像
@@ -119,10 +138,10 @@ async function main() {
     const divBox = document.getElementById("dragBox")
     let faceList = document.getElementById("pasteUnit").childNodes
     for (const node of faceList) {
-        if(node.localName=='img'){
-            node.style.border="1px solid grey"
-            node.onclick=function(){
-                node.id='shawImg'
+        if (node.localName == 'img') {
+            node.style.border = "1px solid grey"
+            node.onclick = function () {
+                node.id = 'shawImg'
                 let dc = new dragClass()
                 dc.dragable(divBox, node)
             }
@@ -132,17 +151,18 @@ async function main() {
 
 
     async function crop() {
-        let x=parseInt(innerDiv.style.left)
-        let y=parseInt(innerDiv.style.top)
-        let w=parseInt(innerDiv.style.width)
-        let h=parseInt(innerDiv.style.height)
-        console.log(innerDiv.style.left,innerDiv.style.top)
-        console.log(x,y,w,h)
-        currentJmage.crop(x,y,w,h)
+        let x = parseInt(innerDiv.style.left)
+        let y = parseInt(innerDiv.style.top)
+        let w = parseInt(innerDiv.style.width)
+        let h = parseInt(innerDiv.style.height)
+        console.log(innerDiv.style.left, innerDiv.style.top)
+        console.log(x, y, w, h)
+        currentJmage.crop(x, y, w, h)
         divBox.removeChild(outerDiv)
         let src = await currentJmage.getBase64Async(Jimp.MIME_JPEG)
         putOnDom(src, imgDom)
     }
+
     function addTextInput() {
         let textInput = document.createElement('input')
         textInput.id = "shawText"
@@ -152,9 +172,9 @@ async function main() {
         let dc = new dragClass()
         dc.dragable(divBox, textInput)
     }
-   
+
     function fill(url) {
-        imgDom.onload = function () { }
+        imgDom.onload = function () {}
         imgDom.src = url
 
     }
@@ -216,6 +236,7 @@ async function main() {
         restartVCS()
         addVersion(src)
     }
+
     function startOnNewImg() {
         blurSlider.value = 0
         contrastSlider.value = 0
@@ -237,12 +258,12 @@ async function main() {
             }
             if (node.id == 'shawImg') {
                 let pmage = await Jimp.read(node.src)
-                pmage.resize(parseInt(node.style.width),parseInt(node.style.height))
+                pmage.resize(parseInt(node.style.width), parseInt(node.style.height))
                 currentJmage.composite(pmage, parseInt(node.style.left), parseInt(node.style.top))
             }
         }
         for (let i = 0; i < list.length;) {
-            let node =list[i]
+            let node = list[i]
             if (node.id == 'shawText' || node.id == 'shawImg')
                 divBox.removeChild(node)
             else i++
@@ -261,33 +282,38 @@ async function main() {
         // }
         imgDom.src = src;
     }
+
     function readPic() {
         let file = document.getElementById("readbtn").files[0];
         let reader = new FileReader();
         //将文件以Data URL形式读入页面
         reader.readAsDataURL(file);
-        reader.onload = async function(e) {
-          let src = e.target.result;
-          originSrc=src
-          jimpStepBegin = await Jimp.read(src)
-          currentJmage=jimpStepBegin.clone()
-          putOnDom(src,imgDom)
-          startOver()
+        reader.onload = async function (e) {
+            let src = e.target.result;
+            originSrc = src
+            jimpStepBegin = await Jimp.read(src)
+            currentJmage = jimpStepBegin.clone()
+            putOnDom(src, imgDom)
+            startOver()
         };
-      }
-      function dataURLtoBlob(dataurl) {
+    }
+
+    function dataURLtoBlob(dataurl) {
         // dataurl
         let arr = dataurl.split(","),
-          mime = arr[0].match(/:(.*?);/)[1],
-          bstr = atob(arr[1]),
-          n = bstr.length,
-          u8arr = new Uint8Array(n);
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
         while (n--) {
-          u8arr[n] = bstr.charCodeAt(n);
+            u8arr[n] = bstr.charCodeAt(n);
         }
-        return new Blob([u8arr], { type: mime });
-      }
-      function savePic () {
+        return new Blob([u8arr], {
+            type: mime
+        });
+    }
+
+    function savePic() {
         let content = dataURLtoBlob(imgDom.src);
         let urlObject = window.URL || window.webkitURL || window;
         let url = urlObject.createObjectURL(content);
@@ -300,7 +326,7 @@ async function main() {
         el.click();
         //移除链接释放资源
         urlObject.revokeObjectURL(url);
-      }
+    }
 
     startOver()
 }

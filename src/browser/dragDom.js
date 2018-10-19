@@ -1,10 +1,11 @@
 import 'babel-polyfill'
+
 function dragClass() {
     this.dragFlag = false;
-    this.x=0
-    this.y=0
-    let outer=this
-    this.dragable=function(dragBox, dragItem) {
+    this.x = 0
+    this.y = 0
+    let outer = this
+    this.dragable = function (dragBox, dragItem) {
         let dragChild = dragItem.cloneNode()
         dragChild.style.position = 'absolute'
         dragChild.style.left = 0
@@ -26,7 +27,7 @@ function dragClass() {
             outer.dragFlag = false;
         };
 
-        dragBox.addEventListener('mousemove',function (e) {
+        dragBox.addEventListener('mousemove', function (e) {
             if (outer.dragFlag) {
                 e = e || window.event;
                 let offsetX = e.clientX - outer.x
@@ -42,7 +43,11 @@ function dragClass() {
         return dragChild
     }
 }
+
 function dragDone(dragBox, dragItem) {
     dragBox.removeChild(dragItem)
 }
-export { dragClass, dragDone }
+export {
+    dragClass,
+    dragDone
+}
