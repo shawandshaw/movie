@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>自制海报</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="https://necolas.github.io/normalize.css/8.0.0/normalize.css">
+    <style>
+        span {
+            font-size: 14px;
+            color: #606266;
+        }
+        fieldset{
+            width:200px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 40px;
+            padding: 0 20px;
+            background-color: #545652;
+        }
+
+        .header span {
+            color: #d5d5d5;
+            font-size: 20px;
+        }
+
+        .header a {
+            margin: 0 5px;
+            color: #d5d5d5;
+        }
+        #imgList img,.uploadLogo{
+            box-sizing: border-box;
+            width: 100px;
+            height: 100px;
+            border: dashed 1px black
+        }
+        .uploadLogo{
+            background-image:url('../../res/img/add.svg');
+            background-size: contain;
+        }
+        .content{
+           margin: 20px;
+        }
+        .main {
+            border: dashed 2px black;
+            width: fit-content;
+            height: fit-content;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <span>制作海报</span>
+        <div><a href="/">返回主页</a></div>
+    </div>
+    <div class="content" style="display:flex;justify-content: space-between;flex-wrap: wrap ">
+        <div class="leftAside">
+            <h3>素材库(向右拖动===>>)</h3>
+            <div id="imgList" style="width:300px;display: flex;flex-wrap: wrap">
+                <img src='../../res/img/face1.jpg' />
+                <img src='../../res/img/face2.jpg' />
+                <img src='../../res/img/face3.jpg' />
+                <img src='../../res/img/face4.jpg' />
+                <img src='../../res/img/face5.jpg' />
+                <img src='../../res/img/face6.jpg' />
+                <img src='../../res/img/face7.jpg' />
+                <img src='../../res/img/face8.jpg' />
+            </div>
+            <label for="upload" style="display:inline-block"><div class="uploadLogo"><input accept="image/*" id="upload" type="file" style="width: 0px;height: 0" multiple></div></label>            
+
+        </div>
+        <div class="main">
+            <canvas id='canvas' width="400" height="560"></canvas>
+        </div>
+        <div class="controls" style="display: flex;">
+            <fieldset>
+                <legend>功能</legend>
+                <fieldset>
+                        <legend>清空和删除</legend>
+                        <div style="display:flex;flex-direction:column">
+                                <button id="clear-canvas">清空画布</button>
+                                <button id="deleteSelected">删除选中</button>
+                        </div>
+                    </fieldset>
+                <fieldset>
+                    <legend>层叠</legend>
+                    <div style="display:flex;flex-direction:column">
+                        <button id="bringToFront">置于最上层</button>
+                        <button id="sendToBack">置于最下层</button>
+                        <button id="sendBackwards">向下一层</button>
+                        <button id="bringForward">向上一层</button>
+                    </div>
+                </fieldset>
+                <fieldset> 
+                    <legend>绘画</legend>
+                    <div style="display: inline-block; margin-left: 10px">
+                            <button id="drawing-mode" class="btn btn-info">进入绘画模式</button><br>
+                          
+                            <div id="drawing-mode-options">
+                              <label for="drawing-mode-selector">Mode:</label>
+                              <select id="drawing-mode-selector">
+                                <option>Pencil</option>
+                                <option>Circle</option>
+                                <option>Spray</option>
+                                <option>Pattern</option>
+                          
+                                <option>hline</option>
+                                <option>vline</option>
+                                <option>square</option>
+                                <option>diamond</option>
+                              </select><br>
+                          
+                              <label for="drawing-line-width">Line width:</label>
+                              <span class="info">10</span><input type="range" value="10" min="0" max="50" id="drawing-line-width"><br>
+                          
+                              <label for="drawing-color">Line color:</label>
+                              <input type="color" value="#005E7A" id="drawing-color"><br>
+                          
+                              <label for="drawing-shadow-color">Shadow color:</label>
+                              <input type="color" value="#005E7A" id="drawing-shadow-color"><br>
+                          
+                              <label for="drawing-shadow-width">Shadow width:</label>
+                              <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-width"><br>
+                          
+                              <label for="drawing-shadow-offset">Shadow offset:</label>
+                              <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>
+                            </div>
+                          </div>
+                </fieldset>
+            </fieldset>
+            <fieldset>
+                <legend>滤镜</legend>
+                <p>
+                    <label><span>Grayscale:</span> <input type="checkbox" id="grayscale" disabled></label><br />
+                </p>
+                <p>
+                    <label><span>Insert:</span> <input type="checkbox" id="invert" disabled></label>
+                </p>
+                <p>
+                    <label><span>Sepia:</span> <input type="checkbox" id="sepia" disabled></label>
+                </p>
+                <p>
+                    <label><span>Black/White:</span> <input type="checkbox" id="blackwhite" disabled></label>
+                </p>
+                <p>
+                    <label><span>Brownie:</span> <input type="checkbox" id="brownie" disabled></label>
+                </p>
+                <p>
+                    <label><span>Vintage:</span> <input type="checkbox" id="vintage" disabled></label>
+                </p>
+                <p>
+                    <label><span>Kodachrome:</span> <input type="checkbox" id="kodachrome" disabled></label>
+                </p>
+                <p>
+                    <label><span>Technicolor:</span> <input type="checkbox" id="technicolor" disabled></label>
+                </p>
+                <p>
+                    <label><span>Polaroid:</span> <input type="checkbox" id="polaroid" disabled></label>
+                </p>
+                <p>
+                    <label><span>Sharpen:</span> <input type="checkbox" id="sharpen" disabled></label>
+                </p>
+                <p>
+                    <label><span>Emboss:</span> <input type="checkbox" id="emboss" disabled></label>
+                </p>
+            </fieldset>
+            <fieldset>
+                <legend>参数</legend>
+                <p>
+                    <label><span>Opacity:</span> <input type="checkbox" id="opacity" disabled></label>
+                    <br>
+                    <label><span>Value:</span> <input type="range" id="opacity-value" value="1" min="0" max="1" step="0.003921"
+                            disabled></label>
+                </p>
+                <p>
+                    <label><span>Brightness:</span> <input type="checkbox" id="brightness" disabled></label>
+                    <br>
+                    <label><span>Value:</span> <input type="range" id="brightness-value" value="0.1" min="-1" max="1"
+                            step="0.003921" disabled></label>
+                </p>
+                <p>
+                    <label><span>Contrast:</span> <input type="checkbox" id="contrast" disabled></label>
+                    <br>
+                    <label><span>Value:</span> <input type="range" id="contrast-value" value="0" min="-1" max="1" step="0.003921"
+                            disabled></label>
+                </p>
+                <p>
+                    <label><span>Saturation:</span> <input type="checkbox" id="saturation" disabled></label>
+                    <br>
+                    <label><span>Value:</span> <input type="range" id="saturation-value" value="0" min="-1" max="1"
+                            step="0.003921" disabled></label>
+                </p>
+                <p>
+                    <label><span>Hue:</span> <input type="checkbox" id="hue" disabled></label>
+                    <br>
+                    <label><span>Value:</span> <input type="range" id="hue-value" value="0" min="-2" max="2" step="0.002"
+                            disabled></label>
+                </p>
+                <p>
+                    <label><span>Noise:</span> <input type="checkbox" id="noise" disabled></label>
+                    <br>
+                    <label><span>Value:</span> <input type="range" id="noise-value" value="100" min="0" max="1000"
+                            disabled></label>
+                </p>
+                <p>
+                    <label><span>Pixelate</span> <input type="checkbox" id="pixelate" disabled></label>
+                    <br>
+                    <label><span>Value:</span> <input type="range" id="pixelate-value" value="4" min="2" max="20"
+                            disabled></label>
+                </p>
+                <p>
+                    <label><span>Blur:</span> <input type="checkbox" id="blur" disabled></label>
+                    <br>
+                    <label><span>Value:</span> <input type="range" id="blur-value" value="0.1" min="0" max="1" step="0.01"
+                            disabled></label>
+                </p>
+            </fieldset>
+        </div>
+
+    </div>
+    <script src='./fab.js'></script>
+</body>
+
+</html>
