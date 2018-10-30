@@ -32,6 +32,14 @@
             margin: 0 5px;
             color: #d5d5d5;
         }
+        #imgList{
+            display: flex;
+            flex-wrap: wrap;
+            width: 320px;
+            height: 500px;
+            overflow-y:scroll;
+            align-content: flex-start;
+        }
         #imgList img,.uploadLogo{
             box-sizing: border-box;
             width: 100px;
@@ -61,18 +69,9 @@
     <div class="content" style="display:flex;justify-content: space-between;flex-wrap: wrap ">
         <div class="leftAside">
             <h3>素材库(向右拖动===>>)</h3>
-            <div id="imgList" style="width:300px;display: flex;flex-wrap: wrap">
-                <img src='../../res/img/face1.jpg' />
-                <img src='../../res/img/face2.jpg' />
-                <img src='../../res/img/face3.jpg' />
-                <img src='../../res/img/face4.jpg' />
-                <img src='../../res/img/face5.jpg' />
-                <img src='../../res/img/face6.jpg' />
-                <img src='../../res/img/face7.jpg' />
-                <img src='../../res/img/face8.jpg' />
+            <div id="imgList" >
+                <label  for="upload" style="display:inline-block"><div class="uploadLogo"><input accept="image/*" id="upload" type="file" style="width: 0px;height: 0" multiple></div></label>            
             </div>
-            <label for="upload" style="display:inline-block"><div class="uploadLogo"><input accept="image/*" id="upload" type="file" style="width: 0px;height: 0" multiple></div></label>            
-
         </div>
         <div class="main">
             <canvas id='canvas' width="400" height="560"></canvas>
@@ -223,7 +222,7 @@
         </div>
 
     </div>
-    <script src='./fab.js'></script>
+    <script src='./poster.js'></script>
 </body>
 
 </html>

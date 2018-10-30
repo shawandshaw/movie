@@ -9,13 +9,28 @@ db.once('open', function (callback) {
 //创建Schema
 let userSchema = mongoose.Schema({
   username: String,
-  password: String
+  password: String,
+  urls:Array
 });
 
 //通过Schema创建model，由于是类，所以首字母大写
 let UserModel = mongoose.model('User', userSchema);
 
 
+async function init() {
+  let doc = await UserModel.findOne({
+    username: ''
+  })
+  if(!doc){
+    let user = new UserModel({
+      username:'',
+      password:'',
+      urls:[]
+    })
+    await user.save()
+  }
+}
+init()
 module.exports = {
   Schema: userSchema,
   Model: UserModel
