@@ -13,10 +13,9 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "babel-polyfill": "^6.26.0",
     "fabric": "^2.4.2-b",
     "koa": "^2.5.3",
-    "koa-bodyparser": "^4.2.1",
+    "koa-body": "^4.0.4",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
     "mongoose": "^5.3.4"
