@@ -9,7 +9,7 @@ yarn install
 #### 具体依赖
 package.json中有说明
 
-### Compiles and hot-reloads for development 本地服务器热替换调试
+### 本地服务器热替换调试（上传图片功能只有在yarn server下才能使用）
 ```
 yarn local
 ```
