@@ -1,9 +1,9 @@
 const fs = require('fs');
 const Koa = require('koa');
 const serve = require('koa-static');
-const path = require('path')
-const router = require('./router')
-require('./database')
+const path = require('path');
+const router = require('./router');
+require('./database');
 const app = new Koa();
 
 const koaBody = require('koa-body');
@@ -20,33 +20,33 @@ app.use(koaBody({
 // x-response-time
 
 app.use(async (ctx, next) => {
-  const start = Date.now();
-  await next();
-  const ms = Date.now() - start;
-  ctx.set('X-Response-Time', `${ms}ms`);
+    const start = Date.now();
+    await next();
+    const ms = Date.now() - start;
+    ctx.set('X-Response-Time', `${ms}ms`);
 });
 
 // logger
 
 app.use(async (ctx, next) => {
-  const start = Date.now();
-  await next();
-  const ms = Date.now() - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}`);
+    const start = Date.now();
+    await next();
+    const ms = Date.now() - start;
+    console.log(`${ctx.method} ${ctx.url} - ${ms}`); //eslint-disable-line
 });
 
 
 
 // static
-let uploadDir=path.join('./dist/upload/')
+let uploadDir=path.join('./dist/upload/');
 if(!fs.existsSync(uploadDir))fs.mkdirSync(uploadDir);
-const static = serve(path.join('./dist'));
-app.use(static);
+const staticDir = serve(path.join('./dist'));
+app.use(staticDir);
 
 // router
 
-app.use(router.routes())
-app.use(router.allowedMethods())
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 app.listen(3000);
-console.log('server is running at "localhost:3000"')
+console.log('server is running at "localhost:3000"'); //eslint-disable-line

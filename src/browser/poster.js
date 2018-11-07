@@ -1,46 +1,51 @@
-import 'fabric'
-import axios from 'axios'
-let $ = function (id) { return document.getElementById(id) };
-let canvas = new fabric.Canvas('canvas');
+import {fabric} from 'fabric';
+import axios from 'axios';
+let $ = function (id) { return document.getElementById(id); };
+let canvas = new fabric.Canvas('myCanvas');
 
-function getPics(){
-    axios.get('/myPics').then(res=>{
-        let urls=res.data
-            let parentEL=$('imgList')
-            let imgList = $('imgList').childNodes
-            let lastEL=parentEL.lastElementChild
-            parentEL.removeChild(lastEL)
-            let promises=[]
-            for (let i=0;i<urls.length;i++) {
-                const url =urls[i]
-                const imgEL=document.createElement('img')
-                imgEL.style={
-                    boxSizing: "border-box",
-                    width: "100px",
-                    height: "100px",
-                    border: "dashed 1px black"
-                }
-                promises.push(new Promise((resolve, reject) => {
-                    imgEL.onload=function(){
-                        resolve(imgEL)
-                    }
-                    imgEL.onerror = reject;
-                    imgEL.src=url
-                }))  
+
+
+getPics();
+myUpload();
+initDrag();
+bindEvent();
+function getPics() {
+    axios.get('/myPics').then(res => {
+        let urls = res.data;
+        let parentEL = $('imgList');
+        let lastEL = parentEL.lastElementChild;
+        parentEL.removeChild(lastEL);
+        let promises = [];
+        for (let i = 0; i < urls.length; i++) {
+            const url = urls[i];
+            const imgEL = document.createElement('img');
+            imgEL.style = {
+                boxSizing: 'border-box',
+                width: '100px',
+                height: '100px',
+                border: 'dashed 1px black'
+            };
+            promises.push(new Promise((resolve, reject) => {
+                imgEL.onload = function () {
+                    resolve(imgEL);
+                };
+                imgEL.onerror = reject;
+                imgEL.src = url;
+            }));
+        }
+        Promise.all(promises).then(result => {
+            for (const imgEL of result) {
+                parentEL.appendChild(imgEL);
             }
-            Promise.all(promises).then(result=>{
-                for (const imgEL of result) {
-                    parentEL.appendChild(imgEL)
-                }
-                parentEL.appendChild(lastEL)
-            })
-    })
+            parentEL.appendChild(lastEL);
+        });
+    });
 }
 function myUpload() {
     $('upload').onchange = function (e) {
         let files = e.target.files;
         let formdata = new FormData(); //创建form对象
-        formdata.enctype = "multipart/form-data";
+        formdata.enctype = 'multipart/form-data';
         for (const file of files) {
             formdata.append('pics', file);//通过append向form对象添加数据             
         }
@@ -49,49 +54,48 @@ function myUpload() {
                 'Content-Type': 'multipart/form-data'
             }
         };  //添加请求头
-        axios.post('/upload', formdata, config).then(res=>{
-            let urls=res.data
-            let parentEL=$('imgList')
-            let imgList = $('imgList').childNodes
-            let lastEL=parentEL.lastElementChild
-            parentEL.removeChild(lastEL)
-            let promises=[]
-            for (let i=0;i<urls.length;i++) {
-                const url =urls[i]
-                const imgEL=document.createElement('img')
-                imgEL.style={
-                    boxSizing: "border-box",
-                    width: "100px",
-                    height: "100px",
-                    border: "dashed 1px black"
-                }
+        axios.post('/upload', formdata, config).then(res => {
+            let urls = res.data;
+            let parentEL = $('imgList');
+            let lastEL = parentEL.lastElementChild;
+            parentEL.removeChild(lastEL);
+            let promises = [];
+            for (let i = 0; i < urls.length; i++) {
+                const url = urls[i];
+                const imgEL = document.createElement('img');
+                imgEL.style = {
+                    boxSizing: 'border-box',
+                    width: '100px',
+                    height: '100px',
+                    border: 'dashed 1px black'
+                };
                 promises.push(new Promise((resolve, reject) => {
-                    imgEL.onload=function(){
-                        resolve(imgEL)
-                    }
+                    imgEL.onload = function () {
+                        resolve(imgEL);
+                    };
                     imgEL.onerror = reject;
-                    imgEL.src=url
-                }))  
+                    imgEL.src = url;
+                }));
             }
-            Promise.all(promises).then(result=>{
+            Promise.all(promises).then(result => {
                 for (const imgEL of result) {
-                    parentEL.appendChild(imgEL)
+                    parentEL.appendChild(imgEL);
                 }
-                parentEL.appendChild(lastEL)
-            })
-        })
-    }
+                parentEL.appendChild(lastEL);
+            });
+        });
+    };
 
 }
 
 // 拖拽
 function initDrag() {
-    let imgList = $('imgList').childNodes
+    let imgList = $('imgList').childNodes;
     for (const img of imgList) {
-        img.ondragstart = rememberURL
+        img.ondragstart = rememberURL;
     }
     function rememberURL(ev) {
-        ev.dataTransfer.setData('url', ev.target.src)
+        ev.dataTransfer.setData('url', ev.target.src);
     }
     canvas.on('drop', function (options) {
         let url = options.e.dataTransfer.getData('url');
@@ -114,17 +118,54 @@ function bindEvent() {
     (function () {
         let clearEl = $('clear-canvas'),
             deleteEL = $('deleteSelected');
-        clearEl.onclick = function () { canvas.clear() };
+        clearEl.onclick = function () { canvas.clear(); };
         deleteEL.onclick = function () {
             var objs = canvas.getActiveObjects();
             for (const obj of objs) {
                 canvas.remove(obj);
             }
-        }
+        };
+    })();
+
+    //适应画布
+    (function () {
+        let suitEL = $('suit');
+        let scaleMode = 0;
+        suitEL.onclick = function () {
+            var obj = canvas.getActiveObject();
+            if (obj) {
+                let scaleX;
+                let scaleY;
+                console.log(scaleMode);// eslint-disable-line
+                switch (scaleMode) {
+                case 0:
+                    obj.scaleX = (canvas.width / obj.width);
+                    obj.scaleY = (canvas.height / obj.height);
+                    obj.centerH();
+                    obj.centerV();
+                    canvas.renderAll();
+                    scaleMode = 1;
+                    break;
+                case 1:
+                    scaleX= (canvas.width / obj.width);
+                    scaleY=(canvas.height / obj.height);
+                    if(scaleX<scaleY)obj.scaleToWidth(canvas.Width);
+                    else obj.scaleToHeight(canvas.height);
+                    obj.centerH();
+                    obj.centerV();
+                    canvas.renderAll();
+                    scaleMode = 0;
+                    break;
+                default:
+                    break;
+                }
+
+            }
+        };
     })();
     // 滤镜和参数
     (function () {
-        var canvas2dBackend = new fabric.Canvas2dFilterBackend()
+        var canvas2dBackend = new fabric.Canvas2dFilterBackend();
         fabric.filterBackend = fabric.initFilterBackend();
         fabric.filterBackend = canvas2dBackend;
         fabric.Object.prototype.transparentCorners = false;
@@ -132,28 +173,20 @@ function bindEvent() {
         function applyFilter(index, filter) {
             var obj = canvas.getActiveObject();
             obj.filters[index] = filter;
-            var timeStart = +new Date();
             obj.applyFilters();
-            var timeEnd = +new Date();
-            var dimString = canvas.getActiveObject().width + ' x ' +
-                canvas.getActiveObject().height;
             canvas.renderAll();
         }
 
-        function getFilter(index) {
-            var obj = canvas.getActiveObject();
-            return obj.filters[index];
-        }
+        // function getFilter(index) {
+        //     var obj = canvas.getActiveObject();
+        //     return obj.filters[index];
+        // }
 
         function applyFilterValue(index, prop, value) {
             var obj = canvas.getActiveObject();
             if (obj.filters[index]) {
                 obj.filters[index][prop] = value;
-                var timeStart = +new Date();
                 obj.applyFilters();
-                var timeEnd = +new Date();
-                var dimString = canvas.getActiveObject().width + ' x ' +
-                    canvas.getActiveObject().height;
                 canvas.renderAll();
             }
         }
@@ -166,7 +199,7 @@ function bindEvent() {
         canvas.on({
             'object:selected': function () {
                 fabric.util.toArray(document.getElementsByTagName('input'))
-                    .forEach(function (el) { el.disabled = false; })
+                    .forEach(function (el) { el.disabled = false; });
 
                 var filters = ['grayscale', 'invert', 'sepia', 'brownie',
                     'brightness', 'contrast', 'saturation', 'noise', 'vintage',
@@ -181,7 +214,7 @@ function bindEvent() {
             },
             'selection:cleared': function () {
                 fabric.util.toArray(document.getElementsByTagName('input'))
-                    .forEach(function (el) { el.disabled = true; })
+                    .forEach(function (el) { el.disabled = true; });
             }
         });
 
@@ -211,10 +244,10 @@ function bindEvent() {
         };
         $('opacity-value').oninput = function () {
             var activeObject = canvas.getActiveObject();
-            if ($('opacity').checked) {
-                activeObject.opacity = $('opacity-value').value
-                canvas.renderAll()
-            }
+            // if ($('opacity').checked) {
+            activeObject.opacity = $('opacity-value').value;
+            canvas.renderAll();
+            // }
         };
         $('brownie').onclick = function () {
             applyFilter(4, this.checked && new f.Brownie());
@@ -243,52 +276,41 @@ function bindEvent() {
         $('sepia').onclick = function () {
             applyFilter(3, this.checked && new f.Sepia());
         };
-        $('brightness').onclick = function () {
-            applyFilter(5, this.checked && new f.Brightness({
+        $('brightness-value').oninput = function () {
+            applyFilter(5, new f.Brightness({
                 brightness: parseFloat($('brightness-value').value)
             }));
-        };
-        $('brightness-value').oninput = function () {
             applyFilterValue(5, 'brightness', parseFloat(this.value));
         };
-        $('contrast').onclick = function () {
-            applyFilter(6, this.checked && new f.Contrast({
+
+        $('contrast-value').oninput = function () {
+            applyFilter(6, new f.Contrast({
                 contrast: parseFloat($('contrast-value').value)
             }));
-        };
-        $('contrast-value').oninput = function () {
             applyFilterValue(6, 'contrast', parseFloat(this.value));
         };
-        $('saturation').onclick = function () {
-            applyFilter(7, this.checked && new f.Saturation({
+        $('saturation-value').oninput = function () {
+            applyFilter(7, new f.Saturation({
                 saturation: parseFloat($('saturation-value').value)
             }));
-        };
-        $('saturation-value').oninput = function () {
             applyFilterValue(7, 'saturation', parseFloat(this.value));
         };
-        $('noise').onclick = function () {
-            applyFilter(8, this.checked && new f.Noise({
+        $('noise-value').oninput = function () {
+            applyFilter(8, new f.Noise({
                 noise: parseInt($('noise-value').value, 10)
             }));
-        };
-        $('noise-value').oninput = function () {
             applyFilterValue(8, 'noise', parseInt(this.value, 10));
         };
-        $('pixelate').onclick = function () {
-            applyFilter(10, this.checked && new f.Pixelate({
+        $('pixelate-value').oninput = function () {
+            applyFilter(10, new f.Pixelate({
                 blocksize: parseInt($('pixelate-value').value, 10)
             }));
-        };
-        $('pixelate-value').oninput = function () {
             applyFilterValue(10, 'blocksize', parseInt(this.value, 10));
         };
-        $('blur').onclick = function () {
-            applyFilter(11, this.checked && new f.Blur({
+        $('blur-value').oninput = function () {
+            applyFilter(11, new f.Blur({
                 value: parseFloat($('blur-value').value)
             }));
-        };
-        $('blur-value').oninput = function () {
             applyFilterValue(11, 'blur', parseFloat(this.value, 10));
         };
         $('sharpen').onclick = function () {
@@ -305,13 +327,11 @@ function bindEvent() {
                     -1, -1, -1]
             }));
         };
-        $('hue').onclick = function () {
-            applyFilter(21, this.checked && new f.HueRotation({
-                rotation: document.getElementById('hue-value').value,
-            }));
-        };
 
         $('hue-value').oninput = function () {
+            applyFilter(21, new f.HueRotation({
+                rotation: document.getElementById('hue-value').value,
+            }));
             applyFilterValue(21, 'rotation', this.value);
         };
     })();
@@ -325,7 +345,7 @@ function bindEvent() {
             drawingShadowColorEl = $('drawing-shadow-color'),
             drawingLineWidthEl = $('drawing-line-width'),
             drawingShadowWidth = $('drawing-shadow-width'),
-            drawingShadowOffset = $('drawing-shadow-offset')
+            drawingShadowOffset = $('drawing-shadow-offset');
 
 
         canvas.isDrawingMode = false;
@@ -487,8 +507,3 @@ function bindEvent() {
         }
     })();
 }
-
-getPics();
-myUpload();
-initDrag();
-bindEvent();
