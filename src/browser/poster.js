@@ -1,16 +1,60 @@
-import {fabric} from 'fabric';
+import { fabric } from 'fabric';
 import axios from 'axios';
+import {getCookie} from './cookie';
 let $ = function (id) { return document.getElementById(id); };
 let canvas = new fabric.Canvas('myCanvas');
 
 
 
 getPics();
-myUpload();
 initDrag();
 bindEvent();
 function getPics() {
     axios.get('/myPics').then(res => {
+        let urls = res.data;
+        let parentEL = $('imgList');
+        let lastEL = parentEL.lastElementChild;
+        parentEL.removeChild(lastEL);
+        let promises = [];
+        for (let i = 0; i < urls.length; i++) {
+            const url = urls[i];
+            const imgEL = document.createElement('img');
+            imgEL.style = {
+                boxSizing: 'border-box',
+                width: '100px',
+                height: '100px',
+                border: 'dashed 1px black',
+                'background-size': 'auto'
+            };
+            promises.push(new Promise((resolve, reject) => {
+                imgEL.onload = function () {
+                    resolve(imgEL);
+                };
+                imgEL.onerror = reject;
+                imgEL.src = url;
+            }));
+        }
+        Promise.all(promises).then(result => {
+            for (const imgEL of result) {
+                parentEL.appendChild(imgEL);
+            }
+            parentEL.appendChild(lastEL);
+        });
+    });
+}
+function myUpload(files) {
+    let formdata = new FormData(); //创建form对象
+    formdata.enctype = 'multipart/form-data';
+    for (const file of files) {
+        formdata.append('pics', file);//通过append向form对象添加数据    
+        console.log(file); //eslint-disable-line         
+    }
+    let config = {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    };  //添加请求头
+    axios.post('/upload', formdata, config).then(res => {
         let urls = res.data;
         let parentEL = $('imgList');
         let lastEL = parentEL.lastElementChild;
@@ -40,51 +84,6 @@ function getPics() {
             parentEL.appendChild(lastEL);
         });
     });
-}
-function myUpload() {
-    $('upload').onchange = function (e) {
-        let files = e.target.files;
-        let formdata = new FormData(); //创建form对象
-        formdata.enctype = 'multipart/form-data';
-        for (const file of files) {
-            formdata.append('pics', file);//通过append向form对象添加数据             
-        }
-        let config = {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        };  //添加请求头
-        axios.post('/upload', formdata, config).then(res => {
-            let urls = res.data;
-            let parentEL = $('imgList');
-            let lastEL = parentEL.lastElementChild;
-            parentEL.removeChild(lastEL);
-            let promises = [];
-            for (let i = 0; i < urls.length; i++) {
-                const url = urls[i];
-                const imgEL = document.createElement('img');
-                imgEL.style = {
-                    boxSizing: 'border-box',
-                    width: '100px',
-                    height: '100px',
-                    border: 'dashed 1px black'
-                };
-                promises.push(new Promise((resolve, reject) => {
-                    imgEL.onload = function () {
-                        resolve(imgEL);
-                    };
-                    imgEL.onerror = reject;
-                    imgEL.src = url;
-                }));
-            }
-            Promise.all(promises).then(result => {
-                for (const imgEL of result) {
-                    parentEL.appendChild(imgEL);
-                }
-                parentEL.appendChild(lastEL);
-            });
-        });
-    };
 
 }
 
@@ -114,6 +113,10 @@ function initDrag() {
 }
 
 function bindEvent() {
+    //上传控件
+    $('upload').onchange = function (e) {
+        myUpload(e.target.files);
+    };
     //清空和删除
     (function () {
         let clearEl = $('clear-canvas'),
@@ -126,38 +129,37 @@ function bindEvent() {
             }
         };
     })();
-
     //适应画布
     (function () {
-        let suitEL = $('suit');
-        let scaleMode = 0;
-        suitEL.onclick = function () {
+        let suit1EL = $('suit1');
+        let suit2EL = $('suit2');
+        suit1EL.onclick = function () {
             var obj = canvas.getActiveObject();
             if (obj) {
-                let scaleX;
-                let scaleY;
-                console.log(scaleMode);// eslint-disable-line
-                switch (scaleMode) {
-                case 0:
-                    obj.scaleX = (canvas.width / obj.width);
-                    obj.scaleY = (canvas.height / obj.height);
+                obj.scaleX = (canvas.width / obj.width);
+                obj.scaleY = (canvas.height / obj.height);
+                obj.centerH();
+                obj.centerV();
+                canvas.renderAll();
+
+            }
+        };
+        suit2EL.onclick = function () {
+            var obj = canvas.getActiveObject();
+            if (obj) {
+                let scaleX = (canvas.width / obj.width);
+                let scaleY = (canvas.height / obj.height);
+                if (scaleX < scaleY) {
+                    obj.scaleToWidth(canvas.width);
                     obj.centerH();
                     obj.centerV();
                     canvas.renderAll();
-                    scaleMode = 1;
-                    break;
-                case 1:
-                    scaleX= (canvas.width / obj.width);
-                    scaleY=(canvas.height / obj.height);
-                    if(scaleX<scaleY)obj.scaleToWidth(canvas.Width);
-                    else obj.scaleToHeight(canvas.height);
+                }
+                else {
+                    obj.scaleToHeight(canvas.height);
                     obj.centerH();
                     obj.centerV();
                     canvas.renderAll();
-                    scaleMode = 0;
-                    break;
-                default:
-                    break;
                 }
 
             }
@@ -506,4 +508,30 @@ function bindEvent() {
             });
         }
     })();
+    (function () {
+        let saveBtn = $('addToLib');
+        saveBtn.onclick = function () {
+            let png = canvas.toDataURL({ format: 'png' });
+            let blob = base64ToBlob(png);
+            myUpload([blob]);
+        };
+    })();
+}
+function base64ToBlob(urlData) {
+    var arr = urlData.split(',');
+    var mime = arr[0].match(/:(.*?);/)[1] || 'image/png';
+    // 去掉url的头，并转化为byte
+    var bytes = window.atob(arr[1]);
+    // 处理异常,将ascii码小于0的转换为大于0
+    var ab = new ArrayBuffer(bytes.length);
+    // 生成视图（直接针对内存）：8位无符号整数，长度1个字节
+    var ia = new Uint8Array(ab);
+    
+    for (var i = 0; i < bytes.length; i++) {
+        ia[i] = bytes.charCodeAt(i);
+    }
+
+    return new Blob([ab], {
+        type: mime
+    });
 }
