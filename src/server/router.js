@@ -9,10 +9,14 @@ const Model = db.Model;
 const router = new Router();
 
 router.get('/', ctx => {
-    ctx.response.redirect('/home.html');
+    if(ctx.session.isSigned){
+        ctx.response.redirect('/homeIn.html');
+    }
+    else ctx.response.redirect('/home.html');
 });
 router.post('/register', register);
 router.post('/login', login);
+router.get('/logout', logout);
 router.post('/upload',handleUpload);
 router.get('/myPics',getPics);
 
@@ -40,21 +44,29 @@ async function login(ctx) {
         ctx.body = 'username not exsits';
     } else if (doc.password == user.password) {
         ctx.body = 'login successfully';
-        ctx.cookies.set('username',new Buffer(user.username).toString('base64'),{
-            domain:'localhost', // 写cookie所在的域名
-            path:'/',       // 写cookie所在的路径
-            maxAge: 24*60*60,   // cookie有效时长
-            httpOnly:false,  // 是否只用于http请求中获取
-            overwrite:true  // 是否允许重写
-        });
+        ctx.session.username = user.username;
+        ctx.session.isSigned = true;
+        // ctx.cookies.set('username',new Buffer(user.username).toString('base64'),{
+        //     domain:'localhost', // 写cookie所在的域名
+        //     path:'/',       // 写cookie所在的路径
+        //     maxAge: 24*60*60,   // cookie有效时长
+        //     httpOnly:false,  // 是否只用于http请求中获取
+        //     overwrite:true  // 是否允许重写
+        // });
     } else {
         ctx.body = 'wrong password';
     }
 }
+
+async function logout(ctx) {
+    ctx.session.isSigned=false;
+    ctx.body='logout';
+}
 async function getPics(ctx) {
-    let cookieName=ctx.cookies.get('username');
+    // let cookieName=ctx.cookies.get('username');
     let username='';
-    if(cookieName)username=new Buffer(cookieName,'base64').toString();
+    // if(cookieName)username=new Buffer(cookieName,'base64').toString();
+    if(ctx.session.username) username=ctx.session.username;
     let doc = await Model.findOne({
         username: username
     });
@@ -63,9 +75,10 @@ async function getPics(ctx) {
 }
 async function handleUpload(ctx) {
     const pics = ctx.request.files.pics;
-    let cookieName=ctx.cookies.get('username');
+    // let cookieName=ctx.cookies.get('username');
     let username='';
-    if(cookieName)username=new Buffer(cookieName,'base64').toString();
+    // if(cookieName)username=new Buffer(cookieName,'base64').toString();
+    if(ctx.session.username) username=ctx.session.username;
     const static_dir='./dist';
     let userDir=path.join(static_dir,'/upload/',username);
     if(!fs.existsSync(userDir))fs.mkdirSync(userDir);

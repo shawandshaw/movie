@@ -13,7 +13,7 @@ function login() {
     }).then(res => {
         showDialog(res.data);
         if (res.data == 'login successfully')
-            window.location.href = '/home.html';
+            window.location.href = '/homeIn.html';
     });
 }
 

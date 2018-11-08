@@ -1,6 +1,5 @@
 import { fabric } from 'fabric';
 import axios from 'axios';
-import {getCookie} from './cookie';
 let $ = function (id) { return document.getElementById(id); };
 let canvas = new fabric.Canvas('myCanvas');
 
