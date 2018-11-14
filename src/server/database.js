@@ -1,5 +1,5 @@
 let mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/user');
+mongoose.connect('mongodb://localhost/user',{useNewUrlParser:true});
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:')); //eslint-disable-line
 db.once('open', function () {
