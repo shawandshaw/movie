@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>自制海报</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="https://necolas.github.io/normalize.css/8.0.0/normalize.css">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="https://necolas.github.io/normalize.css/8.0.0/normalize.css" /> -->
+    <style>
+            @import "normalize.css";
+    </style>
     <style>
         span {
             font-size: 14px;
@@ -67,7 +70,7 @@
         <div class="leftAside">
             <h3>素材库(向右拖进画布===>>)</h3>
             <div id="imgList" >
-                <label  for="upload" style="display:inline-block"><div class="uploadLogo"><input accept="image/*" id="upload" type="file" style="width: 0px;height: 0" multiple></div></label>            
+                <label  for="upload"><div class="uploadLogo"><input accept="image/*" id="upload" type="file" style="width: 0px;height: 0" multiple></div></label>            
             </div>
         </div>
         <div style="display:flex;flex-direction:column">
