@@ -36,6 +36,47 @@
             color: #d5d5d5;
         }
 
+        .toolsBar{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .toolsBar button{
+            box-sizing: border-box;
+            line-height:1;
+            white-space:nowrap;
+            background:#fff;
+            border:1px solid #dcdfe6;
+            color:#606266;
+            text-align:center;
+            outline:0;
+            margin:0;
+            transition:.1s;
+            font-weight:500;
+            padding:8px 20px;
+            font-size:14px;
+            border-radius:4px
+        }
+        .toolsBar button:focus,.toolsBar button:hover{
+            color:#409EFF;
+            border-color:#c6e2ff;
+            background-color:#ecf5ff
+        }
+        .toolsBar input[type=text]{
+            box-sizing: border-box;
+            width: 100%;
+            line-height:1;
+            white-space:nowrap;
+            background:#fff;
+            border:1px solid #dcdfe6;
+            padding:4px 4px;
+            outline:0;
+            margin:0;
+            font-weight:500;
+            font-size:14px;
+            border-radius:4px
+        }
+
         .content {
             display: flex;
             justify-content: center;
@@ -62,19 +103,38 @@
 
 
         .card {
+            box-sizing: border-box;
+            width: 115px;
             display: flex;
             flex-direction: column;
+            border:dashed 1px;
             margin: 5px;
         }
 
         .card-footer {
+            box-sizing: border-box;
+            border-top:solid 1px;
             display: flex;
             justify-content: space-between;
+            word-wrap:break-word
+        }
+        .blackStar{
+            background-image: url('../../res/img/blackStar.png');
+            background-size: cover;
+            width: 15px;
+            height: 15px;
+            align-self: center;
+        }
+        .redStar{
+            background-image: url('../../res/img/redStar.png');
+            background-size: cover;
+            width: 15px;
+            height: 15px;
+            align-self: center;
         }
 
         .img {
             height: 160px;
-            width: 115px;
         }
 
         @media screen and (max-width:999px) {
@@ -121,88 +181,20 @@
             <div class="header"><span>麦壳电影</span>
                 <div><a id="posterbtn" href="poster.html">制作海报</a><a id="logoutbtn" href="login.html">登出</a></div>
             </div>
+            <div class="toolsBar">
+                <div>
+                    <button id="sortByStar">按star排序</button>
+                    <button id="sortByTime">按时间排序</button>
+                    <button id="cancelSort">取消排序</button>
+                </div>
+                <div>
+                    <input id="filterInput" type="text" placeholder="请输入过滤条件" />
+                    <button id="filter">过滤</button>
+                    <button id="cancelFilter">取消过滤</button>
+                </div>
+            </div>
             <div class="content">
-                <ul class="list">
-                    <li class="card">
-                        <img class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2525528688.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2529206747.webp"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2508259902.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2526405034.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2520331478.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2523592367.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2522069454.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2528740370.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2530863118.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2507709428.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img1.doubanio.com/view/photo/s_ratio_poster/public/p2516914607.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2272563445.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2522069454.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2527072332.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2531984454.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
-                    <li class="card">
-                        <img class="img" src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2530572643.jpg"
-                            alt="">
-                        <div class="card-footer"><label>评分：</label><label>9.9</label></div>
-                    </li>
+                <ul class="list" id="posterList">
                 </ul>
             </div>
         </div>
@@ -210,6 +202,7 @@
         <div class="footer">Copyleft © 2018 NJU邵靖</div>
     </div>
     <script src="logout.js"></script>
+    <script src="home.js"></script>
 </body>
 
 </html>

@@ -41,7 +41,7 @@ function getPics() {
         });
     });
 }
-function myUpload(files) {
+function uploadToLib(files) {
     let formdata = new FormData(); //创建form对象
     formdata.enctype = 'multipart/form-data';
     for (const file of files) {
@@ -53,37 +53,57 @@ function myUpload(files) {
             'Content-Type': 'multipart/form-data'
         }
     };  //添加请求头
-    axios.post('/upload', formdata, config).then(res => {
+    axios.post('/uploadToLib', formdata, config).then(res => {
         let urls = res.data;
-        let parentEL = $('imgList');
-        let lastEL = parentEL.lastElementChild;
-        parentEL.removeChild(lastEL);
-        let promises = [];
-        for (let i = 0; i < urls.length; i++) {
-            const url = urls[i];
-            const imgEL = document.createElement('img');
-            imgEL.style = {
-                boxSizing: 'border-box',
-                width: '100px',
-                height: '100px',
-                border: 'dashed 1px black'
-            };
-            promises.push(new Promise((resolve, reject) => {
-                imgEL.onload = function () {
-                    resolve(imgEL);
-                };
-                imgEL.onerror = reject;
-                imgEL.src = url;
-            }));
-        }
-        Promise.all(promises).then(result => {
-            for (const imgEL of result) {
-                parentEL.appendChild(imgEL);
-            }
-            parentEL.appendChild(lastEL);
-        });
+        addToLib(urls);
     });
 
+}
+function uploadToProfile(pic,tag) {
+    let formdata = new FormData(); //创建form对象
+    formdata.enctype = 'multipart/form-data';
+    formdata.append('pics', pic);//通过append向form对象添加数据    
+    let config = {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        params: {
+            tag: tag
+        },
+    };  //添加请求头
+    axios.post('/uploadToProfile', formdata, config).then(()=>{
+        alert('添加成功！');
+    });
+}
+
+function addToLib(urls) {
+    let parentEL = $('imgList');
+    let lastEL = parentEL.lastElementChild;
+    parentEL.removeChild(lastEL);
+    let promises = [];
+    for (let i = 0; i < urls.length; i++) {
+        const url = urls[i];
+        const imgEL = document.createElement('img');
+        imgEL.style = {
+            boxSizing: 'border-box',
+            width: '100px',
+            height: '100px',
+            border: 'dashed 1px black'
+        };
+        promises.push(new Promise((resolve, reject) => {
+            imgEL.onload = function () {
+                resolve(imgEL);
+            };
+            imgEL.onerror = reject;
+            imgEL.src = url;
+        }));
+    }
+    Promise.all(promises).then(result => {
+        for (const imgEL of result) {
+            parentEL.appendChild(imgEL);
+        }
+        parentEL.appendChild(lastEL);
+    });
 }
 
 // 拖拽
@@ -114,7 +134,7 @@ function initDrag() {
 function bindEvent() {
     //上传控件
     $('upload').onchange = function (e) {
-        myUpload(e.target.files);
+        uploadToLib(e.target.files);
     };
     //清空和删除
     (function () {
@@ -509,10 +529,28 @@ function bindEvent() {
     })();
     (function () {
         let saveBtn = $('addToLib');
+        let tagBtn= $('showTag');
+        tagBtn.onclick=function(){
+            $('tagForm').style.display='flex';
+        };
+        let saveBtn1 = $('addToProfile');
         saveBtn.onclick = function () {
             let png = canvas.toDataURL({ format: 'png' });
             let blob = base64ToBlob(png);
-            myUpload([blob]);
+            uploadToLib([blob]);
+        };
+        saveBtn1.onclick = function () {
+            let tag=$('tagInput').value;
+            console.log(tag); //eslint-disable-line
+            let png = canvas.toDataURL({ format: 'png' });
+            let blob = base64ToBlob(png);
+            $('tagForm').style.display='none';
+            $('tagInput').value='';
+            uploadToProfile(blob,tag);
+        };
+        $('cancelAdd').onclick =function(){
+            $('tagForm').style.display='none';
+            $('tagInput').value='';
         };
     })();
 }
@@ -525,7 +563,7 @@ function base64ToBlob(urlData) {
     var ab = new ArrayBuffer(bytes.length);
     // 生成视图（直接针对内存）：8位无符号整数，长度1个字节
     var ia = new Uint8Array(ab);
-    
+
     for (var i = 0; i < bytes.length; i++) {
         ia[i] = bytes.charCodeAt(i);
     }
