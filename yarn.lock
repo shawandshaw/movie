@@ -2801,6 +2801,21 @@ file-entry-cache@^2.0.0:
     flat-cache "^1.2.1"
     object-assign "^4.0.1"
 
+file-match@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/file-match/-/file-match-1.0.2.tgz#c9cad265d2c8adf3a81475b0df475859069faef7"
+  integrity sha1-ycrSZdLIrfOoFHWw30dYWQafrvc=
+  dependencies:
+    utils-extend "^1.0.6"
+
+file-system@2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/file-system/-/file-system-2.2.2.tgz#7d65833e3a2347dcd956a813c677153ed3edd987"
+  integrity sha1-fWWDPjojR9zZVqgTxncVPtPt2Yc=
+  dependencies:
+    file-match "^1.0.1"
+    utils-extend "^1.0.4"
+
 filesize@^3.6.0:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.6.1.tgz#090bb3ee01b6f801a8a8be99d31710b3422bb317"
@@ -4404,6 +4419,14 @@ parcel-bundler@^1.10.3:
     v8-compile-cache "^2.0.0"
     ws "^5.1.1"
 
+parcel-plugin-static-files-copy@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/parcel-plugin-static-files-copy/-/parcel-plugin-static-files-copy-1.2.4.tgz#a05add8e0f5efd3164b16e2817b797936da531c9"
+  integrity sha512-TBHJYDbpFgH3m0U1Za9Vi0ZGK8oi4Aa+QhEYSSXqZGGNtgnTp529T1MPHG/eB6/+w8ivLJPLBn6hLgsuPQ7mYg==
+  dependencies:
+    file-system "2.2.2"
+    path "0.12.7"
+
 parse-asn1@^5.0.0:
   version "5.1.1"
   resolved "http://registry.npmjs.org/parse-asn1/-/parse-asn1-5.1.1.tgz#f6bf293818332bd0dab54efb16087724745e6ca8"
@@ -4463,6 +4486,14 @@ path-to-regexp@^1.1.1:
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.7.0.tgz#59fde0f435badacba103a84e9d3bc64e96b9937d"
   dependencies:
     isarray "0.0.1"
+
+path@0.12.7:
+  version "0.12.7"
+  resolved "https://registry.yarnpkg.com/path/-/path-0.12.7.tgz#d4dc2a506c4ce2197eb481ebfcd5b36c0140b10f"
+  integrity sha1-1NwqUGxM4hl+tIHr/NWzbAFAsQ8=
+  dependencies:
+    process "^0.11.1"
+    util "^0.10.3"
 
 pbkdf2@^3.0.3:
   version "3.0.17"
@@ -5034,7 +5065,7 @@ process-nextick-args@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.0.tgz#a37d732f4271b4ab1ad070d35508e8290788ffaa"
 
-process@^0.11.10:
+process@^0.11.1, process@^0.11.10:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
 
@@ -6110,6 +6141,11 @@ util@^0.10.3:
   resolved "https://registry.yarnpkg.com/util/-/util-0.10.4.tgz#3aa0125bfe668a4672de58857d3ace27ecb76901"
   dependencies:
     inherits "2.0.3"
+
+utils-extend@^1.0.4, utils-extend@^1.0.6:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/utils-extend/-/utils-extend-1.0.8.tgz#ccfd7b64540f8e90ee21eec57769d0651cab8a5f"
+  integrity sha1-zP17ZFQPjpDuIe7Fd2nQZRyril8=
 
 uuid@^3.3.2:
   version "3.3.2"

@@ -26,6 +26,8 @@
     "babel-preset-env": "^1.7.0",
     "cssnano": "^4.1.5",
     "eslint": "^5.8.0",
-    "parcel-bundler": "^1.10.3"
-  }
+    "parcel-bundler": "^1.10.3",
+    "parcel-plugin-static-files-copy": "^1.2.4"
+  },
+  "staticPath": "public"
 }
