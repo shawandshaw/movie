@@ -18,8 +18,7 @@ function login() {
         username,
         password
     }).then(res => {
-        alert(res.data);
-        if (res.data == 'login successfully')
-            window.location.href = '/homeIn.html';
+        if (res.data == 'login successfully') window.location.href = '/homeIn.html';
+        else alert(res.data); 
     });
 }

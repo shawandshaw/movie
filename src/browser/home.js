@@ -18,6 +18,21 @@ $('filterInput').onkeydown=function () {
 $('cancelFilter').onclick = cancelFilter;
 $('cancelSort').onclick = cancelSort;
 
+axios.get('http://saweather.market.alicloudapi.com/hour24',{
+    headers:{
+        'Authorization': 'APPCODE df95a2dde6864f0ea8f2606412a46c4d' 
+    },
+    params:{
+        area: '南京'
+    }
+}).then(res=>{
+    let weatherThisMoment=res.data.showapi_res_body.hourList[0];
+    let divEL=document.createElement('div');
+    divEL.innerText += (weatherThisMoment.area+','+weatherThisMoment.weather+','+weatherThisMoment.temperature+'℃');
+    $('footer').appendChild(divEL);
+});
+
+
 
 function getPosters() {
     axios.get('/posters').then(res => {
