@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Page Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>图表</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         @import "normalize.css";
@@ -31,18 +32,15 @@
 </head>
 
 <body>
-    <div class="header"><span>麦壳电影</span>
+    <div class="header">
+        <span>麦壳电影</span>
+        <span>数据统计</span>
         <div>
-            <a href="poster.html">制作海报</a>
-            <a href="login.html">登录</a>
-            <a href="register.html">注册</a>
-            <a href="info.html">海报详情</a>
-            <a href="home.html">主页</a>
-            <a href="homeIn.html">主页2</a>
-            <a href="chart.html">图表</a>
+            <a href="/">返回主页</a>
         </div>
     </div>
-
+    <div id="main" style="width: 100%;height:600px;"></div>
+    <script src="chart.js"></script>
 </body>
 
 </html>
