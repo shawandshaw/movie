@@ -9,6 +9,12 @@ getPosters();
 $('sortByStar').onclick = sortByStar;
 $('sortByTime').onclick = sortByTime;
 $('filter').onclick = filter;
+$('filterInput').onkeydown=function () {
+    var e = window.event || arguments.callee.caller.arguments[0];
+    if (e && e.keyCode == 13) {
+        filter();
+    }
+};
 $('cancelFilter').onclick = cancelFilter;
 $('cancelSort').onclick = cancelSort;
 
@@ -17,6 +23,11 @@ function getPosters() {
     axios.get('/posters').then(res => {
         posterObjs = res.data.posters;
         starList = res.data.starList;
+        posterObjs = posterObjs.sort((a, b) => {
+            if (a.date > b.date) return -1 ;
+            else if (a.date == b.date) return 0 ;
+            else return 1;
+        });
         originPosterObjs = originPosterObjs.concat(posterObjs);
         repaintList();
     });

@@ -3,6 +3,13 @@ const nameInput = document.getElementById('nameInput');
 const pwdInput = document.getElementById('pwdInput');
 const loginbtn = document.getElementById('loginbtn');
 loginbtn.onclick = login;
+pwdInput.onkeydown = function () {
+    var e = window.event || arguments.callee.caller.arguments[0];
+    if (e && e.keyCode == 13) {
+        login();
+    }
+
+};
 
 function login() {
     const username = nameInput.value;
@@ -11,17 +18,8 @@ function login() {
         username,
         password
     }).then(res => {
-        showDialog(res.data);
+        alert(res.data);
         if (res.data == 'login successfully')
             window.location.href = '/homeIn.html';
     });
-}
-
-function showDialog(message) {
-    let dialog = document.getElementById('dialog');
-    dialog.style.display = 'flex';
-    dialog.innerHTML = message;
-    setTimeout(function () {
-        dialog.style.display = 'none';
-    }, 1500);
 }

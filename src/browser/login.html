@@ -90,29 +90,10 @@
             font-size:14px;
             border-radius:4px
         }
-        .c2{
-            display: none;
-            justify-content: center;
-            align-items: center;
-            width:400px;
-            height:200px;
-            text-align:center;
-            background-color:white;
-            border:2px solid #dcdfe6;
-            border-radius:4px;
-            padding:4px 4px;
-            position:fixed;
-            left:50%;
-            top:0;
-            margin-left:-200px;
-            z-index:10;
-        }
     </style>
 </head>
 
 <body>
-    <div id="dialog" class="c2 hide">
-    </div>
     <div class="content">
         <form action="" class="form">
             <div class="row_center form-header">
@@ -120,7 +101,6 @@
             </div>
             <div class="row_center"><input type="text" placeholder="用户名" name="" id="nameInput"></div>
             <div class="row_center"><input type="password" placeholder="密码" name="" id="pwdInput"></div>
-            <div class="row_end"><label for="rememberPwd"><input type="checkbox" name="" id="rememberPwd">记住密码</label></div>
             <div class="row_center"><button type="button" id="loginbtn">登录</button></div>
             <div class="row_end"><a href="./home.html">返回主页 </a><a href="./register.html"> 注册</a></div>
         </form>
