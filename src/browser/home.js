@@ -59,11 +59,11 @@ function repaintList() {
         const imgEL = document.createElement('img');
         const starEL = document.createElement('div');
         const starPicEL = document.createElement('div');
-        const tagEL = document.createElement('div');
+        const dateEL = document.createElement('div');
         const starNumEL = document.createElement('div');
         starEL.poster = posterObj;
         starEL.onclick = starThePic;
-        tagEL.innerText = posterObj.tag;
+        dateEL.innerText = posterObj.date;
         liEL.className = 'card';
         imgEL.className = 'img';
         starEL.className = 'card-footer';
@@ -73,10 +73,13 @@ function repaintList() {
         starEL.appendChild(starPicEL);
         starNumEL.innerText = posterObj.star;
         starEL.appendChild(starNumEL);
-        tagEL.className = 'card-footer';
+        dateEL.className = 'card-footer';
         liEL.appendChild(imgEL);
         liEL.appendChild(starEL);
-        liEL.appendChild(tagEL);
+        liEL.appendChild(dateEL);
+        imgEL.onclick=function () {
+            window.location.href='/info.html'+'?posterURL='+posterObj.url;
+        };
         promises.push(new Promise((resolve, reject) => {
             imgEL.onload = function () {
                 resolve(liEL);

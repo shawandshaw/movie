@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>海报详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @import "normalize.css";
+    </style>
+    <style>
+        .page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 40px;
+            padding: 0 20px;
+            background-color: #545652;
+        }
+
+        .header span {
+            color: #d5d5d5;
+            font-size: 20px;
+        }
+
+        .header a {
+            margin: 0 5px;
+            color: #d5d5d5;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+
+        }
+
+        .card {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            border: dashed 3px;
+            margin: 5px;
+            width: 200px;
+            height: 286px;
+        }
+
+        .card-footer {
+            box-sizing: border-box;
+            border-top: solid 1px;
+            display: flex;
+            padding: 0 4px;
+            justify-content: space-between;
+            word-wrap: break-word
+        }
+
+        .blackStar {
+            background-image: url('../../res/img/blackStar.png');
+            background-size: cover;
+            width: 15px;
+            height: 15px;
+            align-self: center;
+        }
+
+        .img {
+            height: 280px;
+        }
+        .tag{
+            padding:0 5px;
+            border-radius: 10px;
+            border:#545652 1px solid;
+            color: #545652;
+        }
+        .tagPool{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80px;
+            background-color: #F6F6F6;
+        }
+
+        .realContent {
+            max-width: 1000px;
+        }
+
+        @media screen and (max-width:999px) {
+            .realContent {
+                max-width: 750px
+            }
+        }
+
+        @media screen and (max-width:749px) {
+            .realContent {
+                max-width: 500px
+            }
+        }
+
+        @media screen and (max-width:499px) {
+            .realContent {
+                max-width: 375px
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+        <div>
+            <div class="header"><span>麦壳电影</span>
+                <span>海报详情</span>
+                <div><a id="homeHref" href="/">返回主页</a></div>
+            </div>
+            <div class="content">
+                <div class="realContent">
+                    <div style="display: flex;justify-content: space-between">
+                        <div class="card">
+                            <img id="posterImg" class="img">
+                        </div>
+                        <div style="width:300px">
+                            <div id="author">海报作者</div>
+                            <div id="star">点赞数</div>
+                            <div id="date">发布日期</div>
+                            <div>
+                                标签池：
+                                <div id="tags" class="tagPool"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>海报简介</h3>
+                        在《神奇动物在那里》第一部的结尾，纽特·斯卡曼德（埃迪·雷德梅恩 Eddie Redmayne 饰）协助美国魔法国会，将强大的黑巫师盖勒特·格林德沃（约翰尼·德普 Johnny Depp
+                        饰）抓捕归案。但格林德沃不久便兑现狂言成功越狱，并开始纠集信徒，着手实现他们的邪恶目的：让纯血统的巫师成为统治阶层，镇压一切非魔法生物。
+                        　　为挫败格林德沃的阴谋，阿不思·邓布利多（裘德·洛 Jude Law
+                        饰）向昔日的学生纽特·斯卡曼德寻求帮助。纽特欣然允诺，却没有意识到，他将踏上的会是一段充满艰险的未来征途。此时的魔法世界面临空前的分裂乱局，阶层鸿沟日益加深，爱与忠诚备受考验，至亲好友也可能反目成仇……
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="footer">Copyleft © 2018 NJU邵靖</div>
+    </div>
+    <script src="./info.js"></script>
+</body>
+
+</html>

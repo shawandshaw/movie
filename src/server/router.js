@@ -1,9 +1,9 @@
 const Router = require('koa-router');
-const db =require('./database');
+const db = require('./database');
 const fs = require('fs');
 const path = require('path');
-const UserModel=db.UserModel;
-const PosterModel=db.PosterModel;
+const UserModel = db.UserModel;
+const PosterModel = db.PosterModel;
 
 
 const router = new Router();
@@ -21,7 +21,9 @@ router.post('/uploadToLib', handleUpload);
 router.post('/uploadToProfile', handleUploadProfile);
 router.get('/myPics', getPics);
 router.get('/posters', getPosters);
+router.get('/info', getOnePoster);
 router.get('/star', starThePic);
+router.post('/addTag', addTag);
 
 async function register(ctx) {
     let payload = ctx.request.body;
@@ -148,7 +150,8 @@ async function handleUploadProfile(ctx) {
     poster.url = (path.join('/upload', username, file.name));
     poster.date = new Date().toLocaleString();
     poster.star = 0;
-    poster.tag = ctx.request.query.tag.replace(/，|;|；/g, ',').split(',');
+    poster.author = ctx.session.username;
+    poster.tag = [];
     reader.pipe(stream);
     console.log('uploading %s -> %s', file.name, stream.path);//eslint-disable-line
 
@@ -160,7 +163,7 @@ async function starThePic(ctx) {
     let posters = await PosterModel.find({});
     for (const poster of posters) {
         if (poster.url == query.posterURL) {
-            let res =await PosterModel.updateOne({url:poster.url},{$set:{star:poster.star+1}});
+            let res = await PosterModel.updateOne({ url: poster.url }, { $set: { star: poster.star + 1 } });
             if (!res.ok) {
                 console.error(res);//eslint-disable-line
                 ctx.body = 'star Failed!';
@@ -172,6 +175,26 @@ async function starThePic(ctx) {
             }
             break;
         }
+    }
+}
+async function getOnePoster(ctx) {
+    let query = ctx.request.query;
+    let poster = await PosterModel.findOne({ url: query.posterURL });
+    if (poster) {
+        ctx.body = poster;
+    } else {
+        ctx.body = 'not found!';
+    }
+}
+async function addTag(ctx) {
+    let payload = ctx.request.body;
+    let res = await PosterModel.updateOne({ url: payload.posterURL }, { $set: { tag: payload.tag } });
+    if (!res.ok) {
+        console.error(res);//eslint-disable-line
+        ctx.body = 'Failed!';
+    } else {
+        console.log(res);//eslint-disable-line
+        ctx.body='添加标签成功';
     }
 }
 module.exports = router;

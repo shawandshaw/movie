@@ -59,17 +59,14 @@ function uploadToLib(files) {
     });
 
 }
-function uploadToProfile(pic,tag) {
+function uploadToProfile(pic) {
     let formdata = new FormData(); //创建form对象
     formdata.enctype = 'multipart/form-data';
     formdata.append('pics', pic);//通过append向form对象添加数据    
     let config = {
         headers: {
             'Content-Type': 'multipart/form-data'
-        },
-        params: {
-            tag: tag
-        },
+        }
     };  //添加请求头
     axios.post('/uploadToProfile', formdata, config).then(()=>{
         alert('添加成功！');
@@ -529,10 +526,6 @@ function bindEvent() {
     })();
     (function () {
         let saveBtn = $('addToLib');
-        let tagBtn= $('showTag');
-        tagBtn.onclick=function(){
-            $('tagForm').style.display='flex';
-        };
         let saveBtn1 = $('addToProfile');
         saveBtn.onclick = function () {
             let png = canvas.toDataURL({ format: 'png' });
@@ -540,17 +533,9 @@ function bindEvent() {
             uploadToLib([blob]);
         };
         saveBtn1.onclick = function () {
-            let tag=$('tagInput').value;
-            console.log(tag); //eslint-disable-line
             let png = canvas.toDataURL({ format: 'png' });
             let blob = base64ToBlob(png);
-            $('tagForm').style.display='none';
-            $('tagInput').value='';
-            uploadToProfile(blob,tag);
-        };
-        $('cancelAdd').onclick =function(){
-            $('tagForm').style.display='none';
-            $('tagInput').value='';
+            uploadToProfile(blob);
         };
     })();
 }
