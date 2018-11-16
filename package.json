@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "clean": "rd /S dist",
-    "local": "parcel src/browser/homeIn.html",
-    "build": "parcel build src/browser/homeIn.html",
+    "local": "parcel src/browser/depend.html",
+    "build": "parcel build src/browser/depend.html",
     "server": "yarn run build&&node src/server/server.js"
   },
   "dependencies": {
