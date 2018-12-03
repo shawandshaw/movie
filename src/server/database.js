@@ -14,7 +14,8 @@ db.once('open', function () {
 //创建Schema
 let userSchema = mongoose.Schema({
     username: String,
-    password: String,
+    salt: String,
+    pwdWithSalt:String,
     urls: Array,
 });
 let posterSchema = mongoose.Schema({
@@ -31,17 +32,6 @@ let PosterModel = mongoose.model('Poster', posterSchema);
 
 
 async function init() {
-    let doc = await UserModel.findOne({
-        username: ''
-    });
-    if (!doc) {
-        let user = new UserModel({
-            username: '',
-            password: '',
-            urls: [],
-        });
-        await user.save();
-    }
     let docs = await PosterModel.find({});
     if (docs.length==0) {
         let tagPool = ['喜剧', '人物', '恐怖', '动画', '游戏', '科幻', '英雄', '悲剧', '历史'];

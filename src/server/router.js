@@ -2,6 +2,7 @@ const Router = require('koa-router');
 const db = require('./database');
 const fs = require('fs');
 const path = require('path');
+const SHA256 = require('crypto-js/sha256');
 const UserModel = db.UserModel;
 const PosterModel = db.PosterModel;
 
@@ -33,9 +34,9 @@ async function register(ctx) {
     if (doc == null) {
         let userData = {
             username: payload.username,
-            password: payload.password,
+            salt:payload.salt,
+            pwdWithSalt: SHA256(payload.salt+payload.password),
             urls: [],
-            posters: []
         };
         payload.urls = [];
         let user = new UserModel(userData);
@@ -53,7 +54,7 @@ async function login(ctx) {
     });
     if (doc == null) {
         ctx.body = 'username not exsits';
-    } else if (doc.password == user.password) {
+    } else if (doc.pwdWithSalt == SHA256(doc.salt+user.password)) {
         ctx.body = 'login successfully';
         ctx.session.username = user.username;
         ctx.session.isSigned = true;
