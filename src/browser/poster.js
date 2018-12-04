@@ -46,17 +46,17 @@ function uploadToLib(files) {
     formdata.enctype = 'multipart/form-data';
     for (const file of files) {
         formdata.append('pics', file);//通过append向form对象添加数据    
-        console.log(file); //eslint-disable-line         
     }
     let config = {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
     };  //添加请求头
-    axios.post('/uploadToLib', formdata, config).then(res => {
-        let urls = res.data;
-        addToLib(urls);
-    });
+    if(files.length>0)
+        axios.post('/uploadToLib', formdata, config).then(res => {
+            let urls = res.data;
+            addToLib(urls);
+        });
 
 }
 function uploadToProfile(pic) {
