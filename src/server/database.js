@@ -3,7 +3,7 @@ let mongoose = require('mongoose');
 let mongoOption = {
     useNewUrlParser: true
 };
-mongoose.connect('mongodb://localhost/movieSite', mongoOption);
+mongoose.connect('mongodb://shaw:movie123@localhost/movieSite', mongoOption);
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:')); //eslint-disable-line
 db.once('open', function () {
