@@ -17,20 +17,45 @@ $('filterInput').onkeydown=function () {
 };
 $('cancelFilter').onclick = cancelFilter;
 $('cancelSort').onclick = cancelSort;
-
-axios.get('http://saweather.market.alicloudapi.com/hour24',{
-    headers:{
-        'Authorization': 'APPCODE df95a2dde6864f0ea8f2606412a46c4d' 
-    },
-    params:{
-        area: '南京'
-    }
+axios.get('https://api.ttt.sh/ip/qqwry/',{
 }).then(res=>{
-    let weatherThisMoment=res.data.showapi_res_body.hourList[0];
-    let divEL=document.createElement('div');
-    divEL.innerText += (weatherThisMoment.area+','+weatherThisMoment.weather+','+weatherThisMoment.temperature+'℃');
-    $('footer').appendChild(divEL);
+    let ip=res.data.ip;   
+    axios.get('http://iploc.market.alicloudapi.com/v3/ip',{
+        headers:{
+            'Authorization': 'APPCODE df95a2dde6864f0ea8f2606412a46c4d' 
+        },
+        params:{
+            ip: ip
+        }
+    }).then(res=>{
+        let city=res.data.city;
+        axios.get('http://saweather.market.alicloudapi.com/hour24',{
+            headers:{
+                'Authorization': 'APPCODE df95a2dde6864f0ea8f2606412a46c4d' 
+            },
+            params:{
+                area: city
+            }
+        }).then(res=>{
+            let weatherThisMoment=res.data.showapi_res_body.hourList[0];
+            let divEL=document.createElement('a');
+            divEL.innerText += (weatherThisMoment.area+','+weatherThisMoment.weather+','+weatherThisMoment.temperature+'℃');
+            divEL.classList.add('tooltip');
+            divEL.classList.add('tooltip-up');
+            let hourList=res.data.showapi_res_body.hourList;
+            let tooltip='';
+            for(let i=0;i<8;i++){
+                let hourWeather=hourList[i];
+                tooltip +=(hourWeather.time.substring(8,10)+':00'+' : '+hourWeather.weather+','+hourWeather.temperature+'℃')+';   ';
+            }
+            divEL.setAttribute('data-msg',tooltip);
+            let oldChild=$('footer').firstChild;
+            $('footer').appendChild(divEL);
+            $('footer').appendChild(oldChild);
+        });
+    }); 
 });
+
 
 
 
